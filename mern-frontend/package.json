@@ -1,6 +1,6 @@
 {
-  "name": "react-structure",
-  "version": "0.1.0",
+  "name": "MERN-Stack-Project",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -14,7 +14,6 @@
     "framer-motion": "^4.0.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
-    "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-redux": "^8.0.5",

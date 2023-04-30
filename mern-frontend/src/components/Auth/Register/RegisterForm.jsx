@@ -53,7 +53,10 @@ export default function Register(props) {
       formData.append('profile_pic_url', signUpData.profile_pic_url);
 
       axios
-        .post('http://localhost:3300/api/auth/register', formData)
+        .post(
+          `${process.env.REACT_APP_BACKEND_HOSTNAME}/auth/register`,
+          formData
+        )
         .then(function (response) {
           if (response.status === 201) {
             navigate('/');

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
 export default function LoginForm() {
   const navigate = useNavigate();
   const [logInData, setLogInData] = useState({
@@ -24,11 +23,14 @@ export default function LoginForm() {
 
   const handleSubmit = (e) => {
     if (userData == null) {
-      localStorage.setItem('_token', 'Basic d2FsbGVtcGlyZTp3YWxsZW1waXJl');
+      localStorage.setItem(
+        '_token',
+        `Basic ${process.env.REACT_APP_JWT_SECRET}}`
+      );
     }
 
     axios
-      .post('http://localhost:3300/api/auth/login', logInData)
+      .post(`${process.env.REACT_APP_BACKEND_HOSTNAME}/auth/login`, logInData)
       .then((response) => {
         if (response.status === 200) {
           localStorage.setItem('user', JSON.stringify(response.data));
