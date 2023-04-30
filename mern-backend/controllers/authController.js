@@ -10,13 +10,12 @@ const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   region: process.env.AWS_BUCKET_REGION,
+  signatureVersion: 'v4',
 });
 
 // function to handle user registration
 exports.register = async (req, res) => {
-  console.log(req.body);
   const { firstName, lastName, mobile, password } = req.body;
-
   try {
     const existingUser = await User.findOne({ where: { mobile: mobile } });
     if (existingUser) {
@@ -41,25 +40,24 @@ exports.register = async (req, res) => {
     // Continue with the registration logic here
     const file = req.files.profile_pic_url;
     if (!file) {
-      return res.status(400).json({ error: 'No file uploaded' });
+      console.log('No file uploaded');
+      // return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    // generate unique filename for S3
+    // generate unique filename for S3 and upload the image
     const uniqueFilename = `${uuidv4()}.${file.name.split('.').pop()}`;
-
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: uniqueFilename,
       Body: file.data,
       ContentType: file.mimetype,
-      ACL: 'public-read',
     };
 
     // upload the file to S3
     s3.upload(params, async (err, data) => {
       if (err) {
         console.error(err);
-        // return res.status(500).json({ error: 'Failed to upload file' });
+        return res.status(500).json({ error: 'Failed to upload file' });
       }
       let pic_url = '';
       if (data) {

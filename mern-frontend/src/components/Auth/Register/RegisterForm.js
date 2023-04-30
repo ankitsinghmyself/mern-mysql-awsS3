@@ -31,6 +31,19 @@ export default function Register(props) {
       null
     ) {
       showErrorMessage('All fields are required.');
+    } else if (signUpData.mobile.length !== 10) {
+      showErrorMessage('Mobile number must be 10 digits.');
+    } else if (signUpData.password.length < 6) {
+      showErrorMessage('Password must be at least 6 characters.');
+    } else if (signUpData.profile_pic_url === null) {
+      showErrorMessage('Please select a profile picture.');
+    } else if (
+      signUpData.profile_pic_url.type !== 'image/jpeg' &&
+      signUpData.profile_pic_url.type !== 'image/png'
+    ) {
+      showErrorMessage('Profile picture must be in JPG or PNG format.');
+    } else if (signUpData.confirm_password !== signUpData.password) {
+      showErrorMessage('Password and confirm password must be same.');
     } else {
       const formData = new FormData();
       formData.append('firstName', signUpData.firstName);
@@ -130,8 +143,9 @@ export default function Register(props) {
                       type="tel"
                       className="placeholder:text-gray-500 text-sm focus:shadow-blue-500-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
                       name="mobile"
-                      placeholder="Mobile Number"
+                      placeholder="Mobile Number(10 digits)"
                       aria-label="Mobile Number"
+                      maxLength={10}
                       aria-describedby="mobile-addon"
                       onChange={(e) => onHandleChange(e)}
                     />
@@ -152,9 +166,9 @@ export default function Register(props) {
                     <input
                       type="confpassword"
                       className="placeholder:text-gray-500 text-sm focus:shadow-blue-500-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
-                      name="password"
+                      name="confirm_password"
                       placeholder="Confirm Password"
-                      aria-label="Password"
+                      aria-label="confirm_password"
                       aria-describedby="password-addon"
                       onChange={(e) => onHandleChange(e)}
                     />
