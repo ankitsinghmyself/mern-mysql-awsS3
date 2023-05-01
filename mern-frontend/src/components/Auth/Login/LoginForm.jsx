@@ -28,6 +28,14 @@ export default function LoginForm() {
         `Basic ${process.env.REACT_APP_JWT_SECRET}}`
       );
     }
+    if (logInData.mobile.length !== 10) {
+      showErrorMessage('Please enter valid mobile number');
+      return;
+    }
+    if (logInData.password.length < 6) {
+      showErrorMessage('Password must be at least 6 characters');
+      return;
+    }
 
     axios
       .post(`${process.env.REACT_APP_BACKEND_HOSTNAME}/auth/login`, logInData)

@@ -6,7 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import 'tw-elements';
 import App from './App';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('ankit'));
 
 root.render(
   <React.StrictMode>
